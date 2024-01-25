@@ -4,23 +4,33 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import MoviesList from "./cine/MoviesList";
-import { MovieContext } from "./context";
+import { DarkModeContext, MovieContext } from "./context";
 import "./output.css";
 
 function App() {
     const [cartData, setCartData] = useState([]);
+    const [darkMode, setDarkMode] = useState(true);
+
     return (
         <>
-            <MovieContext.Provider value={{ cartData, setCartData }}>
-                <Header />
-                <main>
-                    <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
-                        <Sidebar />
-                        <MoviesList />
+            <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>
+                <MovieContext.Provider value={{ cartData, setCartData }}>
+                    {/* ========================================== */}
+                    <div
+                        className={`w-full h-full ${darkMode ? "dark" : " "} `}
+                    >
+                        <Header />
+                        <main>
+                            <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
+                                <Sidebar />
+                                <MoviesList />
+                            </div>
+                        </main>
+                        <Footer />
                     </div>
-                </main>
-                <Footer />
-            </MovieContext.Provider>
+                    {/* ========================================== */}
+                </MovieContext.Provider>
+            </DarkModeContext.Provider>
         </>
     );
 }
