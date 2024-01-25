@@ -1,34 +1,19 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import "./App.css";
-import Footer from "./Footer";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import MoviesList from "./cine/MoviesList";
+import Page from "./Page";
 import { DarkModeContext, MovieContext } from "./context";
 import "./output.css";
+import { cartReducer, initialState } from "./reducer/cartReducer";
 
 function App() {
-    const [cartData, setCartData] = useState([]);
+    const [state, dispatch] = useReducer(cartReducer, initialState);
     const [darkMode, setDarkMode] = useState(true);
 
     return (
         <>
             <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>
-                <MovieContext.Provider value={{ cartData, setCartData }}>
-                    {/* ========================================== */}
-                    <div
-                        className={`w-full h-full ${darkMode ? "dark" : " "} `}
-                    >
-                        <Header />
-                        <main>
-                            <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
-                                <Sidebar />
-                                <MoviesList />
-                            </div>
-                        </main>
-                        <Footer />
-                    </div>
-                    {/* ========================================== */}
+                <MovieContext.Provider value={{ state, dispatch }}>
+                    <Page></Page>
                 </MovieContext.Provider>
             </DarkModeContext.Provider>
         </>

@@ -12,10 +12,10 @@ function Header() {
     const handleShowtCart = () => {
         setShowCart(true);
     };
-    const { cartData } = useContext(MovieContext);
+    const { state } = useContext(MovieContext);
     let totalAdded;
-    if (cartData) {
-        totalAdded = cartData.length;
+    if (state.cartData) {
+        totalAdded = state.cartData.length;
     }
     return (
         <>

@@ -5,10 +5,15 @@ import { MovieContext } from "../context";
 import { getImgUrl } from "../utils/utility";
 
 function CartDetails({ setShowCart }) {
-    const { cartData, setCartData } = useContext(MovieContext);
+    const { state, dispatch } = useContext(MovieContext);
     const handleDeleteMovie = (id) => {
-        const filteredMovies = cartData.filter((movie) => movie.id !== id);
-        setCartData(filteredMovies);
+        // const filteredMovies = state.cartData.filter(
+        //     (movie) => movie.id !== id
+        // );
+        dispatch({
+            type: "removeFromCart",
+            payload: id,
+        });
     };
     return (
         <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/60 backdrop-blur-sm">
@@ -17,10 +22,12 @@ function CartDetails({ setShowCart }) {
                     <h2 className="text-2xl lg:text-[30px] mb-10 font-bold">
                         Your Carts
                     </h2>
-                    {cartData.length === 0 ? (
-                        <p className="text-red-500 text-center mb-10 text-2xl ">Cart is emty</p>
+                    {state.cartData.length === 0 ? (
+                        <p className="text-red-500 text-center mb-10 text-2xl ">
+                            Cart is emty
+                        </p>
                     ) : (
-                        cartData.map((movie) => (
+                        state.cartData.map((movie) => (
                             <div
                                 key={movie.id}
                                 className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14"
